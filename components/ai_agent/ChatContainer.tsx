@@ -10,10 +10,11 @@ import { X } from 'lucide-react';
 interface ChatContainerProps {
   onClose: () => void;
   isOpen: boolean;
+  messages: Message[];
+  setMessages: React.Dispatch<React.SetStateAction<Message[]>>;
 }
 
-const ChatContainer: React.FC<ChatContainerProps> = ({ onClose, isOpen }) => {
-  const [messages, setMessages] = useState<Message[]>([]);
+const ChatContainer: React.FC<ChatContainerProps> = ({ onClose, isOpen, messages, setMessages }) => {
   const [isTyping, setIsTyping] = useState<boolean>(false);
   const [sessionId] = useState<string>(() => `session_${Date.now()}_${Math.random().toString(36).slice(2)}`);
 
@@ -21,12 +22,14 @@ const ChatContainer: React.FC<ChatContainerProps> = ({ onClose, isOpen }) => {
     if (!isOpen) {
       setMessages([]);
     }
-  }, [isOpen]);
+  }, [isOpen, setMessages]);
 
   const handleSendMessage = async (messageContent: string): Promise<void> => {
     try {
-      // Agregar mensaje del usuario
-      setMessages((prev) => [...prev, { sender: 'user', content: messageContent }]);
+      setMessages((prev: Message[]) => [...prev, { 
+        sender: 'user', 
+        content: messageContent 
+      }]);
       setIsTyping(true);
 
       // Enviar mensaje al backend
