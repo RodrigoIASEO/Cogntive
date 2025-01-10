@@ -1,0 +1,19 @@
+/home/rodrigo7/cognitiveds-landing-pro
+├── README.md
+├── app
+├── components
+├── dist
+├── lib
+├── next-env.d.ts
+├── next.config.js
+├── node_modules
+├── package-lock.json
+├── package.json
+├── postcss.config.mjs
+├── public
+├── styles
+├── tailwind.config.ts
+└── tsconfig.json
+
+directory: 7 file: 8
+
