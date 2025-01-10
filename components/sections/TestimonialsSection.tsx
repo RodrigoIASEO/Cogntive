@@ -146,7 +146,7 @@ const TestimonialsSection: React.FC = () => {
                   </div>
                   <div className="flex-1 flex flex-col justify-center">
                     <p className="text-gray-200 text-lg md:text-xl mb-6 italic">
-                      "{testimonials[currentIndex].testimonial}"
+                      &quot;{testimonials[currentIndex].testimonial}&quot;
                     </p>
                     <div>
                       <p className="font-semibold text-white text-lg">

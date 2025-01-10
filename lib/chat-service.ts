@@ -2,6 +2,12 @@ import { supabase } from './supabase'
 import type { Conversation, UserMetadata, Message } from './supabase'
 import { UAParser } from 'ua-parser-js'
 
+interface LocationInfo {
+  country?: string;
+  region?: string;
+  city?: string;
+}
+
 export class ChatService {
   static async createConversation(platform: string = 'web'): Promise<string> {
     const { data: conversation, error } = await supabase
@@ -24,21 +30,24 @@ export class ChatService {
     conversationId: string,
     userAgent: string,
     ipAddress: string,
-    locationInfo: any
+    locationInfo: unknown
   ): Promise<void> {
     const parser = new UAParser(userAgent)
     const os = `${parser.getOS().name} ${parser.getOS().version}`
     const device = `${parser.getDevice().vendor} ${parser.getDevice().model}`
 
+    // Validar y convertir locationInfo
+    const safeLocationInfo = (locationInfo as LocationInfo) || {};
+    
     const { error } = await supabase
       .from('user_metadata')
       .insert([
         {
           conversation_id: conversationId,
           ip_address: ipAddress,
-          country: locationInfo.country,
-          region: locationInfo.region,
-          city: locationInfo.city,
+          country: safeLocationInfo.country || null,
+          region: safeLocationInfo.region || null,
+          city: safeLocationInfo.city || null,
           os,
           device,
           user_agent: userAgent

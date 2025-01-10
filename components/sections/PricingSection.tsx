@@ -3,7 +3,7 @@
 import React from 'react'
 import { motion } from 'framer-motion'
 import { useInView } from 'react-intersection-observer'
-import { Code2, Building2, Briefcase, Cog } from 'lucide-react'
+import { Building2, Briefcase } from 'lucide-react'
 
 interface PlanProps {
   title: string
