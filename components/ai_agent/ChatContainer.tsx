@@ -26,13 +26,12 @@ const ChatContainer: React.FC<ChatContainerProps> = ({ onClose, isOpen, messages
 
   const handleSendMessage = async (messageContent: string): Promise<void> => {
     try {
-      setMessages((prev: Message[]) => [...prev, { 
-        sender: 'user', 
-        content: messageContent 
-      }]);
+      setMessages((prev: Message[]) => [
+        ...prev,
+        { sender: 'user', content: messageContent },
+      ]);
       setIsTyping(true);
 
-      // Enviar mensaje al backend
       const response = await fetch('https://AiAgent-cognitivedsai.replit.app/api/message', {
         method: 'POST',
         headers: {
@@ -49,8 +48,8 @@ const ChatContainer: React.FC<ChatContainerProps> = ({ onClose, isOpen, messages
       }
 
       const data = await response.json();
+      console.log('Respuesta del backend:', data);
 
-      // Validar y manejar la respuesta
       if (data.reply) {
         setMessages((prev) => [...prev, { sender: 'assistant', content: data.reply }]);
       } else {
